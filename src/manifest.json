@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Google Meet Mute Toggler",
+  "version": "1.0.0",
+
+  "page_action": {
+    "default_icon": {
+      "19": "icons/baseline_mic_black_48dp.png"
+    }
+  },
+
+  "permissions": ["https://meet.google.com/*", "declarativeContent"],
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": ["content_script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
