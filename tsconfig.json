@@ -4,7 +4,8 @@
     "rootDir": ".",
     "outDir": "build",
     "lib": ["dom", "ES2020"],
-    "declaration": false
+    "declaration": false,
+    "esModuleInterop": true
   },
   "include": ["src/**/*.ts", "test/**/*.ts"]
 }

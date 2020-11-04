@@ -1,34 +1,51 @@
-setTimeout(() => {
-  // TODO: wait for muteButton
-  const muteButton = document.querySelector('[role=button][aria-label*="⌘+D"]');
-  console.log(muteButton);
+let muteButton: HTMLElement;
+let buttonObserver: MutationObserver | null = null;
 
-  if (muteButton) {
-    chrome.runtime.sendMessage({
-      isMuted: muteButton.getAttribute('data-is-muted') === 'true',
-    });
+const queryMuteButton = () =>
+  document.querySelector<HTMLElement>(
+    '[role=button][aria-label*="⌘+D" i], [role=button][aria-label*="⌘ + D" i]'
+  );
 
-    const observer = new MutationObserver(mutations => {
-      console.log(mutations);
-      for (const m of mutations) {
-        if (
-          (m.target as HTMLElement).getAttribute('data-is-muted') !== m.oldValue
-        ) {
-          chrome.runtime.sendMessage({
-            isMuted: muteButton.getAttribute('data-is-muted') === 'true',
-          });
+const notifyMuteStateChange = () =>
+  chrome.runtime.sendMessage({
+    isMuted: muteButton.dataset.isMuted === 'true',
+  });
+
+(async () => {
+  chrome.runtime.onMessage.addListener((_msg, _sender, _sendResponse) => {
+    const ev = new MouseEvent('click', {bubbles: true});
+    muteButton?.dispatchEvent(ev);
+  });
+
+  while (true) {
+    if ((muteButton = queryMuteButton()!)) {
+      console.log(muteButton);
+
+      notifyMuteStateChange();
+
+      buttonObserver = new MutationObserver(mutations => {
+        for (const m of mutations) {
+          if (muteButton.dataset.isMuted !== m.oldValue) {
+            notifyMuteStateChange();
+          }
         }
-      }
-    });
-    observer.observe(muteButton, {
-      attributes: true,
-      attributeOldValue: true,
-      attributeFilter: ['data-is-muted'],
+      });
+      buttonObserver.observe(muteButton, {
+        attributes: true,
+        attributeOldValue: true,
+        attributeFilter: ['data-is-muted'],
+      });
+    }
+
+    await new Promise(resolve => {
+      new MutationObserver((_mutations, observer) => {
+        if (queryMuteButton() !== muteButton) {
+          observer.disconnect();
+          resolve();
+        }
+      }).observe(document.body, {childList: true});
     });
 
-    chrome.runtime.onMessage.addListener((msg, _sender, _sendResponse) => {
-      const ev = new MouseEvent('click', {bubbles: true});
-      muteButton?.dispatchEvent(ev);
-    });
+    buttonObserver?.disconnect();
   }
-}, 5000);
+})();
