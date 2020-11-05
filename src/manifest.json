@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Google Meet Mute Toggler",
-  "version": "1.0.0",
+  "version": null,
 
   "page_action": {
     "default_icon": {

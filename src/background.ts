@@ -5,7 +5,7 @@ chrome.runtime.onInstalled.addListener(() => {
         conditions: [
           new chrome.declarativeContent.PageStateMatcher({
             pageUrl: {
-              hostEquals: 'meet.google.com',
+              hostEquals: "meet.google.com",
             },
           }),
         ],
@@ -16,22 +16,20 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, _sendResponse) => {
-  console.log(msg);
-  if (msg.isMuted) {
+  const tabId = sender.tab?.id;
+  if (tabId)
     chrome.pageAction.setIcon({
-      tabId: sender.tab!.id!,
-      path: 'icons/baseline_mic_off_black_48dp.png',
+      tabId,
+      path: msg.isMuted
+        ? "icons/baseline_mic_off_black_48dp.png"
+        : "icons/baseline_mic_black_48dp.png",
     });
-  } else {
-    chrome.pageAction.setIcon({
-      tabId: sender.tab!.id!,
-      path: 'icons/baseline_mic_black_48dp.png',
-    });
-  }
 });
 
-chrome.pageAction.onClicked.addListener(tab => {
-  chrome.tabs.sendMessage(tab.id!, {
-    _test: true,
-  });
+chrome.pageAction.onClicked.addListener((tab) => {
+  if (tab.id) {
+    chrome.tabs.sendMessage(tab.id, {
+      _test: true,
+    });
+  }
 });

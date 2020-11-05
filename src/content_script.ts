@@ -1,4 +1,4 @@
-let muteButton: HTMLElement;
+let muteButton: HTMLElement | null;
 let buttonObserver: MutationObserver | null = null;
 
 const queryMuteButton = () =>
@@ -6,26 +6,26 @@ const queryMuteButton = () =>
     '[role=button][aria-label*="⌘+D" i], [role=button][aria-label*="⌘ + D" i]'
   );
 
-const notifyMuteStateChange = () =>
-  chrome.runtime.sendMessage({
-    isMuted: muteButton.dataset.isMuted === 'true',
-  });
+const notifyMuteStateChange = () => {
+  if (muteButton)
+    chrome.runtime.sendMessage({
+      isMuted: muteButton.dataset.isMuted === "true",
+    });
+};
 
 (async () => {
   chrome.runtime.onMessage.addListener((_msg, _sender, _sendResponse) => {
-    const ev = new MouseEvent('click', {bubbles: true});
+    const ev = new MouseEvent("click", { bubbles: true });
     muteButton?.dispatchEvent(ev);
   });
 
-  while (true) {
-    if ((muteButton = queryMuteButton()!)) {
-      console.log(muteButton);
-
+  for (;;) {
+    if ((muteButton = queryMuteButton())) {
       notifyMuteStateChange();
 
-      buttonObserver = new MutationObserver(mutations => {
+      buttonObserver = new MutationObserver((mutations) => {
         for (const m of mutations) {
-          if (muteButton.dataset.isMuted !== m.oldValue) {
+          if (muteButton && muteButton.dataset.isMuted !== m.oldValue) {
             notifyMuteStateChange();
           }
         }
@@ -33,17 +33,17 @@ const notifyMuteStateChange = () =>
       buttonObserver.observe(muteButton, {
         attributes: true,
         attributeOldValue: true,
-        attributeFilter: ['data-is-muted'],
+        attributeFilter: ["data-is-muted"],
       });
     }
 
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       new MutationObserver((_mutations, observer) => {
         if (queryMuteButton() !== muteButton) {
           observer.disconnect();
           resolve();
         }
-      }).observe(document.body, {childList: true});
+      }).observe(document.body, { childList: true });
     });
 
     buttonObserver?.disconnect();
