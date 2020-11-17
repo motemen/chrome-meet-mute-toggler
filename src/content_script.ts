@@ -3,7 +3,12 @@ let buttonObserver: MutationObserver | null = null;
 
 const queryMuteButton = () =>
   document.querySelector<HTMLElement>(
-    '[role=button][aria-label*="⌘+D" i], [role=button][aria-label*="⌘ + D" i]'
+    [
+      '[role=button][aria-label*="⌘+D" i]',
+      '[role=button][aria-label*="⌘ + D" i]',
+      '[role=button][aria-label*="Ctrl+D" i]',
+      '[role=button][aria-label*="Ctrl + D" i]',
+    ].join(",")
   );
 
 const notifyMuteStateChange = () => {
