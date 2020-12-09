@@ -21,8 +21,8 @@ chrome.runtime.onMessage.addListener((msg, sender, _sendResponse) => {
     chrome.pageAction.setIcon({
       tabId,
       path: msg.isMuted
-        ? "icons/mic_off.png"
-        : "icons/mic_on.png",
+        ? "assets/icons/mic_off.png"
+        : "assets/icons/mic_on.png",
     });
 });
 

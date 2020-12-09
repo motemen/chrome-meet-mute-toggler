@@ -36,7 +36,7 @@ module.exports = {
             });
           },
         },
-        { from: "icons/*", context: "src/" },
+        { from: "assets/icons/*", context: "src/" },
       ],
     }),
   ],

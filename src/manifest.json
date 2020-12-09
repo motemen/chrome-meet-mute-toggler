@@ -5,7 +5,7 @@
 
   "page_action": {
     "default_icon": {
-      "32": "icons/mic_on.png"
+      "32": "assets/icons/mic_on.png"
     }
   },
 
