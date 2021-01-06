@@ -3,13 +3,13 @@
   "name": "Google Meet Mute Toggler",
   "version": null,
 
-  "page_action": {
+  "browser_action": {
     "default_icon": {
       "32": "assets/icons/mic_on.png"
     }
   },
 
-  "permissions": ["https://meet.google.com/*", "declarativeContent"],
+  "permissions": ["https://meet.google.com/*", "tabs"],
   "background": {
     "persistent": false,
     "scripts": ["background.js"]

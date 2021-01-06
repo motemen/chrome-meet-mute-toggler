@@ -1,3 +1,6 @@
+import { EVENT_MUTE_STATE_CHANGED, EVENT_TAB_FOUND } from "./events";
+import { Message } from "./events";
+
 let muteButton: HTMLElement | null;
 let buttonObserver: MutationObserver | null = null;
 
@@ -14,8 +17,16 @@ const queryMuteButton = () =>
 const notifyMuteStateChange = () => {
   if (muteButton)
     chrome.runtime.sendMessage({
+      event: EVENT_MUTE_STATE_CHANGED,
       isMuted: muteButton.dataset.isMuted === "true",
-    });
+    } as Message);
+};
+
+const notifyTabFound = () => {
+  chrome.runtime.sendMessage({
+    event: EVENT_TAB_FOUND,
+    isFound: !!muteButton,
+  } as Message);
 };
 
 (async () => {
@@ -25,7 +36,9 @@ const notifyMuteStateChange = () => {
   });
 
   for (;;) {
-    if ((muteButton = queryMuteButton())) {
+    muteButton = queryMuteButton();
+    notifyTabFound();
+    if (muteButton) {
       notifyMuteStateChange();
 
       buttonObserver = new MutationObserver((mutations) => {
@@ -42,7 +55,7 @@ const notifyMuteStateChange = () => {
       });
     }
 
-    await new Promise((resolve) => {
+    await new Promise<void>((resolve) => {
       new MutationObserver((_mutations, observer) => {
         if (queryMuteButton() !== muteButton) {
           observer.disconnect();
