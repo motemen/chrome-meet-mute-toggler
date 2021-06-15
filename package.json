@@ -8,7 +8,7 @@
   "private": true,
   "devDependencies": {
     "@motemen/chrome-extension-scripts": "https://github.com/motemen/chrome-extension-scripts.git",
-    "@types/chrome": "0.0.126",
+    "@types/chrome": "0.0.145",
     "@types/node": "14.14.6"
   },
   "scripts": {
