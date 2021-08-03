@@ -20,5 +20,15 @@
       "js": ["content_script.js"],
       "run_at": "document_idle"
     }
-  ]
+  ],
+  "commands": {
+    "focus": {
+      "description": "Focus",
+      "global": true
+    },
+    "toggle-mute": {
+      "description": "Toggle Mute",
+      "global": true
+    }
+  }
 }

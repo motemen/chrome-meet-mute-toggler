@@ -2,6 +2,35 @@ import { Message } from "./events";
 
 const meetTabIds = new Set<number>();
 
+const doFocus = () => {
+  const meetTabId = meetTabIds.values().next().value as number | undefined;
+  if (meetTabId) {
+    chrome.tabs.get(meetTabId, (meetTab) => {
+      chrome.windows.update(meetTab.windowId, { focused: true });
+      chrome.tabs.update(meetTabId, { active: true });
+    });
+  }
+};
+
+const doToggleMute = () => {
+  const meetTabId = meetTabIds.values().next().value as number | undefined;
+  if (meetTabId) {
+    chrome.tabs.sendMessage(meetTabId, {});
+  }
+};
+
+chrome.commands.onCommand.addListener((command) => {
+  switch (command) {
+    case "focus":
+      doFocus();
+      break;
+
+    case "toggle-mute":
+      doToggleMute();
+      break;
+  }
+});
+
 chrome.runtime.onMessage.addListener((msg: Message, sender, _sendResponse) => {
   const tabId = sender.tab?.id;
   if (!tabId) return;
@@ -34,7 +63,6 @@ chrome.browserAction.onClicked.addListener((tab) => {
   if (meetTabIds.has(tab.id)) {
     chrome.tabs.sendMessage(tab.id, {});
   } else {
-    console.log(meetTabIds);
     const meetTabId = meetTabIds.values().next().value as number | undefined;
     if (meetTabId) {
       chrome.tabs.get(meetTabId, (meetTab) => {
