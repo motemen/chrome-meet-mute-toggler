@@ -23,11 +23,11 @@
   ],
   "commands": {
     "focus": {
-      "description": "Focus",
+      "description": "Focus tab",
       "global": true
     },
     "toggle-mute": {
-      "description": "Toggle Mute",
+      "description": "Toggle mute",
       "global": true
     }
   }

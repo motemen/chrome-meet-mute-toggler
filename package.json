@@ -1,6 +1,6 @@
 {
   "name": "chrome-meet-mute-toggler",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "index.js",
   "repository": "https://github.com/motemen/chrome-meet-mute-toggler.git",
   "author": "motemen <motemen@gmail.com>",
