@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@motemen/chrome-extension-scripts": "^1.0.0-alpha",
+    "@motemen/chrome-extension-scripts": "1.0.0-alpha",
     "@types/chrome": "0.0.126",
     "@types/node": "14.17.12"
   },

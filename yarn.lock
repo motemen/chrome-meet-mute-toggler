@@ -38,7 +38,7 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@motemen/chrome-extension-scripts@^1.0.0-alpha":
+"@motemen/chrome-extension-scripts@1.0.0-alpha":
   version "1.0.0-alpha"
   resolved "https://registry.yarnpkg.com/@motemen/chrome-extension-scripts/-/chrome-extension-scripts-1.0.0-alpha.tgz#36a386818fa42689219691c7a2a76010fa4ecd10"
   integrity sha512-mi1BYQs0BZJkc4Y/hmHGePR5+6dv/hyQx9oKf2dDEJ8xmxjB82d/P7eXwxUFLzTWfq2KMhL75tRgoErWa1Abng==
