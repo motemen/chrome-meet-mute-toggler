@@ -80,10 +80,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@types/chrome@0.0.126":
-  version "0.0.126"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.126.tgz#f9f3436712f0c7c12ea9798abc9b95575ad7b23a"
-  integrity sha512-191z7uoyfbGU+z7/m45j9XbWugWqVHVPMM4hJV5cZ+3YzGCT9wFjMUHO3Wr3Xvo8aVodvRNu28u7lvEaAnfbzg==
+"@types/chrome@0.0.332":
+  version "0.0.332"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.332.tgz#ccf326e7c13890c1ada6dd830ffb21c3c815719b"
+  integrity sha512-Fl4luF9q/iroXMKbL1LQyr/nCKhKwkwkZQ9qeeePFECW/8SP/Lrx2kJ26wnpTpr0iAznkENoO8g924CP4mfNxw==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
